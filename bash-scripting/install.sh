@@ -47,24 +47,23 @@ do
             
             service_enabled=$(sudo systemctl is-enabled $l)
             
-            if [ $service_enabled = "enabled" ]
+            if [[ $service_enabled = "enabled" ]]
                 then
                     echo "$l is enabled"
             else
                 echo "$l is not enabled"
                 echo "Do you want to enable it? "
-                read -p "(Y)es or (N)o" answer
-                if [ $answer = "Y"]
+                read -p "(Y)es or (N)o: " answer
+                if [[ $answer = "Y" || "y" ]]
                     then 
                         sudo systemctl enable $l
                 else
                     echo "Okay Chief"
-                    break
                 fi
-
                 exit 1
             fi
         }
+
         #check if the software is enabled
         check_service_enabled l
 
@@ -85,7 +84,6 @@ do
                     echo "$l is active"
             else 
                 echo "$l is not active"
-                break
             fi
         }
         
@@ -95,8 +93,9 @@ do
 
     echo "Do you want to perform another function? "
     read -p "(Y)es or (N)o: " again
-    if [ $again != "Y" ]
+    if [[ $again != "Y" || "y" ]]
         then
+            echo "Bye!"
             exit 1
         fi
 done
